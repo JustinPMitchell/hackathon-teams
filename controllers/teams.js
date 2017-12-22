@@ -10,11 +10,13 @@ router.get('/', function(req, res) {
 
 router.post('/', function(req, res) {
   teamService.addTeam(req.body);
+    res.redirect('/teams');
+});
 
-router.delete(":name", function(req, res) {
-  console.log("delete route name = ", req.params.name);
-  deleteTeam(req.params.name);
-  res.send({message: "success"});
+router.delete('/:name', function(req, res) {
+  // console.log("delete route name = ", req.params.name);
+  teamService.deleteTeam(req.params.name);
+  res.send();
 });
 
 // app.delete('/teams/:name', function(req, res) {
@@ -42,8 +44,7 @@ router.delete(":name", function(req, res) {
 //   });
 // });
 
-  res.redirect('/teams');
-});
+
 
 router.get('/new', function(req, res) {
   res.render('teams/new');
