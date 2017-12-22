@@ -13,47 +13,29 @@ router.post('/', function(req, res) {
     res.redirect('/teams');
 });
 
+router.put("/:name", function(req, res) {
+  teamService.editTeam(req.params.name, req.body);
+  console.log("name:", req.params.name);
+  console.log("req.body is: ", req.body);
+  res.send("Put Route");
+});
+
 router.delete('/:name', function(req, res) {
-  // console.log("delete route name = ", req.params.name);
   teamService.deleteTeam(req.params.name);
   res.send();
 });
-
-// app.delete('/teams/:name', function(req, res) {
-//   var teamToDelete = req.params.name;
-
-//   // delete team here
-
-  
-//    * instead of rendering a page, send back JSON or text, which can be read
-//    * in the .done() promise of the AJAX call
-   
-//   res.send({message: 'success'});
-// });
-
-// router.delete("/:id", function(req, res) {
-//   console.log("delete route. ID = ", req.params.id);
-//   db.article.destroy({
-//     where: { id: req.params.id }
-//   }).then(function(deleted){
-//     console.log("deleted = ", deleted);
-//     res.send("success");
-//   }).catch(function(err) {
-//     console.log("an error happened", err);
-//     res.send("fail");
-//   });
-// });
-
-
 
 router.get('/new', function(req, res) {
   res.render('teams/new');
 });
 
-router.get('/:name', function(req, res) {
-  // search for the team name in all the teams.
+router.get("/edit/:name", function(req, res) {
   var team = teamService.getTeam(req.params.name);
+  res.render("teams/edit", { team: team });
+});
 
+router.get('/:name', function(req, res) {
+  var team = teamService.getTeam(req.params.name);
   res.render('teams/show', { team: team });
 });
 
